@@ -1,0 +1,8 @@
+#!/bin/bash
+
+rm -rf ./ssh_id ./ssh_id.pub
+ssh-keygen -b 2048 -t rsa -f ./ssh_id -q -N "" || exit 1
+docker build . -t apostrophe-dev || exit 1
+docker rm --force dev || exit 1
+# A named volume, not a bind mount, for better performance inside the container
+docker create --name dev -v persistent:/persistent:delegated -p 3000:3000 -p 2049:2049 apostrophe-dev || exit 1

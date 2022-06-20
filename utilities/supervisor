@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Make sure this exists in the persistent volume (Dockerfile is too early to see that)
+mkdir -p /persistent/mongodb 
+
+m use stable --port 27017 --dbpath /persistent/mongodb &
+
+# start sshd, which always forks on its own (TODO: this means "wait" won't monitor it)
+/usr/sbin/sshd
+
+# Wait for any process to exit
+wait -n
+
+# Exit with status of process that exited first
+exit $?
