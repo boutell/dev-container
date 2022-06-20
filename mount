@@ -1,2 +1,4 @@
 #!/bin/bash
 
+sudo mount -t nfs -o port=4049 -o vers=4.0 localhost:/persistent ~/persistent
+

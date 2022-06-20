@@ -6,12 +6,12 @@ mkdir -p /persistent/mongodb
 cat > /etc/ganesha/ganesha.conf <<EOM
 EXPORT
 {
-        Export_Id = 2;
+        Export_Id = 0;
         Path = /persistent;
         Pseudo = /persistent;
         Protocols = 4;
         Access_Type = RW;
-        Squash = None;
+        Squash = AllSquash;
         FSAL
         {
                 Name = VFS;
