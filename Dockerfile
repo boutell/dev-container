@@ -3,7 +3,7 @@ EXPOSE 3000
 EXPOSE 2049
 WORKDIR /persistent/workspace
 RUN apt-get update
-RUN apt-get -y install imagemagick nfs-ganesha nfs-ganesha-vfs vim nano
+RUN apt-get -y install imagemagick samba vim nano
 RUN mkdir -p /root/.local/bin
 # needed for the utilities installed by m to cooperate
 ENV PATH="/root/.local/bin:$PATH"

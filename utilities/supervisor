@@ -3,26 +3,26 @@
 # Make sure this exists in the persistent volume (Dockerfile is too early to see that)
 mkdir -p /persistent/mongodb 
 
-cat > /etc/ganesha/ganesha.conf <<EOM
-EXPORT
-{
-        Export_Id = 0;
-        Path = /persistent;
-        Pseudo = /persistent;
-        Protocols = 4;
-        Access_Type = RW;
-        Squash = AllSquash;
-        FSAL
-        {
-                Name = VFS;
-        }
-}
+cat > /etc/samba/smb.conf <<EOM
+[global]
+  workgroup = SIMPLE
+[persistent]
+  comment = Reachable by host only
+  path = /persistent
+  read only = no
+  force user = root
+  unix extensions = yes
+  vfs objects = fruit
 EOM
+
+echo -e "root\nroot" | smbpasswd -a root
 
 # Services that fork on their own (TODO: this means they won't stop the container if they fail,
 # but these are pretty stable)
-/sbin/rpcbind
-/usr/bin/ganesha.nfsd -C -N NIV_FULL_DEBUG -L /tmp/ganesha.log
+
+/usr/sbin/smbd
+
+# Services we'll monitor
 
 m use stable --port 27017 --dbpath /persistent/mongodb &
 
