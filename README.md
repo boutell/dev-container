@@ -59,3 +59,4 @@ sudo umount ~/persistent
 
 * **Linux hosts.** `update` should just use a bind mount in this situation, as it's already fast, and `mount` should do nothing and warn that it's not required.
 * **Windows hosts.** Use WSL 2, for sure. Probably mount a `devfs` URL. Not sure if `unix extensions` will prove compatible with that or not.
+* **Developer experience.** Forcing `~/persistent` is rude and unintuitive, come up with a config file etc.
