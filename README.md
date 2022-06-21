@@ -25,6 +25,7 @@ You're in `/persistent/workspace`, a good place to `git clone` projects and get 
 ## Edit your code on the host
 
 ```bash
+# You will be prompted for your password
 ./mount
 cd ~/persistent
 cd workspace
@@ -47,3 +48,14 @@ If you don't like opening port 3000, you can change the `update` script to map a
 ```bash
 ./stop
 ```
+
+## Unmount the folder
+
+```bash
+sudo umount ~/persistent
+```
+
+## TODO
+
+* **Linux hosts.** `update` should just use a bind mount in this situation, as it's already fast, and `mount` should do nothing and warn that it's not required.
+* **Windows hosts.** Use WSL 2, for sure. Probably mount a `devfs` URL. Not sure if `unix extensions` will prove compatible with that or not.
